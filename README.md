@@ -6,6 +6,7 @@
 
 Choose one of rock, paper, Scissors, Lizard or Spock .
 Reveal simultaneously with your opponent, often after a verbal cue.
+
 #
 Rock – (✊)
 Paper – (✋)
