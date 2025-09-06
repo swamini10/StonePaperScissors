@@ -10,8 +10,8 @@ Reveal simultaneously with your opponent, often after a verbal cue.
 Rock – (✊)
 Paper – (✋)
 Scissors –(✌️)
-Lizard  –()
-Spock –()
+Lizard  –(🤌)
+Spock –(🖖)
 
 <h3>Compare:</h3>
 <h4> Rock crushes Scissors → Rock wins. </h4>
