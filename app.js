@@ -1,63 +1,42 @@
-let userScore = 0;
-let compScore = 0;
-
-const choices = document.querySelectorAll(".choice");
-const msg = document.querySelector("#msg");
-
-const userScorePara = document.querySelector("#user-score");
-const compScorePara = document.querySelector("#comp-score");
-
-const genCompChoice = () => {
-  const options = ["rock", "paper", "scissors"];
-  const randIdx = Math.floor(Math.random() * 3);
-  return options[randIdx];
+const moves = ['rock','paper','scissors','lizard','spock'];
+const winsAgainst = {
+  rock:     ['scissors','lizard'],
+  paper:    ['rock','spock'],
+  scissors: ['paper','lizard'],
+  lizard:   ['spock','paper'],
+  spock:    ['scissors','rock']
 };
 
-const drawGame = () => {
-  msg.innerText = "Game was Draw. Play again.";
-  msg.style.backgroundColor = "#081b31";
-};
+let userScore = 0, compScore = 0;
 
-const showWinner = (userWin, userChoice, compChoice) => {
-  if (userWin) {
+const userScoreEl = document.getElementById('user-score');
+const compScoreEl = document.getElementById('comp-score');
+const msgEl = document.getElementById('msg');
+
+document.querySelectorAll('.choice').forEach(el => {
+  el.addEventListener('click', () => playRound(el.dataset.move));
+});
+
+function playRound(userMove) {
+  const compMove = moves[Math.floor(Math.random() * moves.length)];
+  if (userMove === compMove) {
+    showMessage(`Draw! You both chose ${userMove}.`, 'draw');
+  } else if (winsAgainst[userMove].includes(compMove)) {
     userScore++;
-    userScorePara.innerText = userScore;
-    msg.innerText = `You win! Your ${userChoice} beats ${compChoice}`;
-    msg.style.backgroundColor = "green";
+    userScoreEl.textContent = userScore;
+    showMessage(`You win! ${capitalize(userMove)} beats ${compMove}.`, 'win');
   } else {
     compScore++;
-    compScorePara.innerText = compScore;
-    msg.innerText = `You lost. ${compChoice} beats your ${userChoice}`;
-    msg.style.backgroundColor = "red";
+    compScoreEl.textContent = compScore;
+    showMessage(`You lose! ${capitalize(compMove)} beats ${userMove}.`, 'lose');
   }
-};
+}
 
-const playGame = (userChoice) => {
-  //Generate computer choice
-  const compChoice = genCompChoice();
+function showMessage(text, type) {
+  msgEl.textContent = text;
+  msgEl.className = type;
+}
 
-  if (userChoice === compChoice) {
-    //Draw Game
-    drawGame();
-  } else {
-    let userWin = true;
-    if (userChoice === "rock") {
-      //scissors, paper
-      userWin = compChoice === "paper" ? false : true;
-    } else if (userChoice === "paper") {
-      //rock, scissors
-      userWin = compChoice === "scissors" ? false : true;
-    } else {
-      //rock, paper
-      userWin = compChoice === "rock" ? false : true;
-    }
-    showWinner(userWin, userChoice, compChoice);
-  }
-};
-
-choices.forEach((choice) => {
-  choice.addEventListener("click", () => {
-    const userChoice = choice.getAttribute("id");
-    playGame(userChoice);
-  });
-});
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}

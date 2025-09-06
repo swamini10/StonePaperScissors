@@ -66,3 +66,7 @@ img {
   padding: 1rem;
   border-radius: 1rem;
 }
+#msg { padding: 1rem; display: inline-block; border-radius: 8px; color: #fff; }
+    #msg.draw { background: #081b31; }
+    #msg.win { background: green; }
+    #msg.lose { background: red; }
